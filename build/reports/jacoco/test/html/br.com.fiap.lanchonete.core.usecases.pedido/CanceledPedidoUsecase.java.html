@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CanceledPedidoUsecase.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">producao-service</a> &gt; <a href="index.source.html" class="el_package">br.com.fiap.lanchonete.core.usecases.pedido</a> &gt; <span class="el_source">CanceledPedidoUsecase.java</span></div><h1>CanceledPedidoUsecase.java</h1><pre class="source lang-java linenums">package br.com.fiap.lanchonete.core.usecases.pedido;
+
+import java.util.Objects;
+
+import org.springframework.stereotype.Service;
+
+import br.com.fiap.lanchonete.core.domain.entities.HistoricoPedido;
+import br.com.fiap.lanchonete.core.domain.entities.Pedido;
+import br.com.fiap.lanchonete.core.domain.enums.StatusEnum;
+import br.com.fiap.lanchonete.core.usecases.ports.repositories.HistoricoPedidoRepositoryPort;
+import br.com.fiap.lanchonete.core.usecases.ports.repositories.PedidoRepositoryPort;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class CanceledPedidoUsecase {
+
+    private final PedidoRepositoryPort pedidoRepositoryPort;
+    private final HistoricoPedidoRepositoryPort historicoPedidoRepositoryPort;
+
+    public Pedido cancel(Long id) {
+<span class="nc" id="L26">        Pedido pedido = pedidoRepositoryPort.get(id);</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (Objects.isNull(pedido)) {</span>
+<span class="nc" id="L28">            throw new EntityNotFoundException(&quot;Pedido nao encontrado para o id: &quot; + id);</span>
+        }
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (StatusEnum.CANCELADO.equals(pedido.getStatus())) {</span>
+<span class="nc" id="L31">            throw new EntityExistsException(&quot;Pedido jÃ¡ foi cancelado&quot;);</span>
+        }
+<span class="nc" id="L33">        pedido.setStatus(StatusEnum.CANCELADO);</span>
+<span class="nc" id="L34">        Pedido updatedPedido = pedidoRepositoryPort.save(pedido);</span>
+<span class="nc" id="L35">        HistoricoPedido historicoPedido = HistoricoPedido.builder()</span>
+<span class="nc" id="L36">                .idPedido(updatedPedido.getIdPedido())</span>
+<span class="nc" id="L37">                .status(updatedPedido.getStatus())</span>
+<span class="nc" id="L38">                .build();</span>
+<span class="nc" id="L39">        historicoPedidoRepositoryPort.save(historicoPedido);</span>
+<span class="nc" id="L40">        return updatedPedido;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

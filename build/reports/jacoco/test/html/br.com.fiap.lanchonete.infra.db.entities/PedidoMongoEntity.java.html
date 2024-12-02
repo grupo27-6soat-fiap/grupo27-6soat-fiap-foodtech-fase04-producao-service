@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PedidoMongoEntity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">producao-service</a> &gt; <a href="index.source.html" class="el_package">br.com.fiap.lanchonete.infra.db.entities</a> &gt; <span class="el_source">PedidoMongoEntity.java</span></div><h1>PedidoMongoEntity.java</h1><pre class="source lang-java linenums">package br.com.fiap.lanchonete.infra.db.entities;
+
+import java.time.Instant;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import br.com.fiap.lanchonete.core.domain.enums.StatusEnum;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Version;
+import org.springframework.data.domain.Auditable;
+import org.springframework.data.domain.Persistable;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Document(collection = &quot;pedidos&quot;)
+@NoArgsConstructor
+@Getter
+@Setter
+public class PedidoMongoEntity implements Persistable&lt;Long&gt; {
+
+    @Id
+    private Long idPedido;
+
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
+
+    @CreatedDate
+    private Instant timestampCriacao;
+
+    @LastModifiedDate
+    private Instant timestampAlteracao;
+
+    private transient boolean isNew = true;
+
+
+    @Override
+    public Long getId() {
+       
+<span class="nc" id="L45">        return idPedido;</span>
+    }
+
+    @Override
+    public boolean isNew() {
+       
+<span class="nc" id="L51">        return  isNew;</span>
+    }
+
+    public void markAsPersisted() {
+<span class="nc" id="L55">        this.isNew = false;</span>
+<span class="nc" id="L56">    }</span>
+
+
+    // Getters and Setters
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
