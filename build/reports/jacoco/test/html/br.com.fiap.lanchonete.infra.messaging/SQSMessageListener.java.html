@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SQSMessageListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">producao-service</a> &gt; <a href="index.source.html" class="el_package">br.com.fiap.lanchonete.infra.messaging</a> &gt; <span class="el_source">SQSMessageListener.java</span></div><h1>SQSMessageListener.java</h1><pre class="source lang-java linenums">package br.com.fiap.lanchonete.infra.messaging;
+
+import br.com.fiap.lanchonete.core.event.PedidoPagoEvent;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import io.awspring.cloud.sqs.annotation.SqsListener;
+
+import br.com.fiap.lanchonete.core.event.PedidoCanceladoEvent;
+import br.com.fiap.lanchonete.core.usecases.pedido.CanceledPedidoUsecase;
+import br.com.fiap.lanchonete.core.usecases.pedido.ReceivePedidoUsecase;
+import org.springframework.beans.factory.annotation.Autowired;
+
+<span class="nc" id="L15">public class SQSMessageListener {</span>
+
+    //private static final Logger logger = LoggerFactory.getLogger(SQSMessageListener.class);
+
+
+    @Autowired
+    private  ReceivePedidoUsecase receivePedidoUsecase ;
+    @Autowired
+    private  CanceledPedidoUsecase canceledPedidoUsecase;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+
+
+
+    @SqsListener(&quot;${cloud.aws.sqs.queue.producao-pedido-pago}&quot;)
+
+    public void processarPedido(String json) throws JsonProcessingException {
+
+<span class="nc" id="L35">        System.out.println(&quot;Received message from producao-pedido-pago-queue: {}&quot; + json.toString());</span>
+
+<span class="nc" id="L37">        PedidoPagoEvent deserializedEvent = objectMapper.readValue(json, PedidoPagoEvent.class);</span>
+
+
+<span class="nc" id="L40">        receivePedidoUsecase.receive(Long.parseLong(deserializedEvent.getOrderId()));</span>
+        
+<span class="nc" id="L42">    }</span>
+
+    @SqsListener(&quot;${cloud.aws.sqs.queue.producao-cancelamento}&quot;)
+    public void cancelarPedido(String json) throws JsonProcessingException {
+
+        //System.out.println(&quot;Pedido cancelado recebido: &quot; + event.getOrderId());
+
+<span class="nc" id="L49">        PedidoCanceladoEvent deserializedEvent = objectMapper.readValue(json, PedidoCanceladoEvent.class);</span>
+            
+<span class="nc" id="L51">        canceledPedidoUsecase.cancel(Long.parseLong(deserializedEvent.getOrderId()));</span>
+<span class="nc" id="L52">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

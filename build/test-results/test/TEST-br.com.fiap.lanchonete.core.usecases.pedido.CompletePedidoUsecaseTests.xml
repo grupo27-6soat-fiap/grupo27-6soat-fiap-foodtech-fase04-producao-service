@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.fiap.lanchonete.core.usecases.pedido.CompletePedidoUsecaseTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-12-03T00:08:35" hostname="DESKTOP-FELIPE" time="1.481">
+  <properties/>
+  <testcase name="should_throw_entity_exists_exception_when_pedido_already_finalized()" classname="br.com.fiap.lanchonete.core.usecases.pedido.CompletePedidoUsecaseTests" time="1.463"/>
+  <testcase name="should_complete_pedido_successfully()" classname="br.com.fiap.lanchonete.core.usecases.pedido.CompletePedidoUsecaseTests" time="0.011"/>
+  <testcase name="should_throw_entity_not_found_exception_when_pedido_not_found()" classname="br.com.fiap.lanchonete.core.usecases.pedido.CompletePedidoUsecaseTests" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.fiap.lanchonete.core.usecases.pedido.ReceivePedidoUsecaseTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-12-03T00:08:36" hostname="DESKTOP-FELIPE" time="0.011">
+  <properties/>
+  <testcase name="should_receive_pedido_successfully()" classname="br.com.fiap.lanchonete.core.usecases.pedido.ReceivePedidoUsecaseTests" time="0.006"/>
+  <testcase name="should_throw_entity_exists_exception_when_pedido_already_received()" classname="br.com.fiap.lanchonete.core.usecases.pedido.ReceivePedidoUsecaseTests" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
